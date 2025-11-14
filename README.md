@@ -286,7 +286,7 @@ The built files will be in the `dist` directory and can be served with any stati
 
 ## Demo Video
 
-[Link to Google Drive video will be added here]
+https://drive.google.com/file/d/187ddB8fl8iSt6ajNrxrpPaRGrA-brGp_/view?usp=sharing
 
 The demo video shows:
 1. User signup and signin
