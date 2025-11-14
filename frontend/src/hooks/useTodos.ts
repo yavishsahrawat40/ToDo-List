@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { todoApi } from '../api/todoApi';
-import { TodoInput } from '../schemas/todoSchemas';
-import { Todo } from '../types';
+import type { TodoInput } from '../schemas/todoSchemas';
+import type { Todo } from '../types';
 
 export const useTodos = () => {
   const queryClient = useQueryClient();

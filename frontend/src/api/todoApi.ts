@@ -1,6 +1,6 @@
 import axios from '../lib/axios';
-import { Todo, TodoResponse } from '../types';
-import { TodoInput } from '../schemas/todoSchemas';
+import type { Todo, TodoResponse } from '../types';
+import type { TodoInput } from '../schemas/todoSchemas';
 
 export const todoApi = {
   getTodos: async (): Promise<Todo[]> => {

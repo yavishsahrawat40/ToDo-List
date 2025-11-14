@@ -3,7 +3,8 @@ import { useAuthStore } from '../store/authStore';
 import { useTodos } from '../hooks/useTodos';
 import { TodoForm } from '../components/TodoForm';
 import { TodoItem } from '../components/TodoItem';
-import { TodoInput } from '../schemas/todoSchemas';
+import type { TodoInput } from '../schemas/todoSchemas';
+import type { Todo } from '../types';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -17,6 +18,10 @@ export const Home = () => {
 
   const handleCreateTodo = (data: TodoInput) => {
     createTodo(data);
+  };
+
+  const handleUpdateTodo = (id: string, data: Partial<Todo>) => {
+    updateTodo({ id, data });
   };
 
   return (
@@ -45,7 +50,7 @@ export const Home = () => {
                 <TodoItem
                   key={todo._id}
                   todo={todo}
-                  onUpdate={updateTodo}
+                  onUpdate={handleUpdateTodo}
                   onDelete={deleteTodo}
                 />
               ))}

@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { todoSchema, TodoInput } from '../schemas/todoSchemas';
+import { todoSchema } from '../schemas/todoSchemas';
+import type { TodoInput } from '../schemas/todoSchemas';
 
 interface TodoFormProps {
   onSubmit: (data: TodoInput) => void;

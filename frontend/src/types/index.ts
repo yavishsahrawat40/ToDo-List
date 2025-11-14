@@ -1,10 +1,10 @@
-export interface User {
+export type User = {
   id: string;
   name: string;
   email: string;
-}
+};
 
-export interface Todo {
+export type Todo = {
   _id: string;
   userId: string;
   title: string;
@@ -12,16 +12,16 @@ export interface Todo {
   completed: boolean;
   createdAt: string;
   updatedAt: string;
-}
+};
 
-export interface AuthResponse {
+export type AuthResponse = {
   success: boolean;
   token: string;
   user: User;
-}
+};
 
-export interface TodoResponse {
+export type TodoResponse = {
   success: boolean;
   data: Todo | Todo[];
   message?: string;
-}
+};

@@ -16,13 +16,13 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
     }
 
     const user = await User.create({ name, email, password });
-    const token = generateToken(user._id.toString());
+    const token = generateToken(String(user._id));
 
     res.status(201).json({
       success: true,
       token,
       user: {
-        id: user._id,
+        id: String(user._id),
         name: user.name,
         email: user.email,
       },
@@ -49,13 +49,13 @@ export const signin = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    const token = generateToken(user._id.toString());
+    const token = generateToken(String(user._id));
 
     res.status(200).json({
       success: true,
       token,
       user: {
-        id: user._id,
+        id: String(user._id),
         name: user.name,
         email: user.email,
       },
@@ -127,7 +127,7 @@ export const resetPassword = async (req: Request, res: Response): Promise<void> 
     user.resetPasswordExpire = undefined;
     await user.save();
 
-    const token = generateToken(user._id.toString());
+    const token = generateToken(String(user._id));
 
     res.status(200).json({
       success: true,

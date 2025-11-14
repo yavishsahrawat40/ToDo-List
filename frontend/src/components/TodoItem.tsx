@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Todo } from '../types';
+import type { Todo } from '../types';
 
 interface TodoItemProps {
   todo: Todo;
@@ -24,23 +24,28 @@ export const TodoItem = ({ todo, onUpdate, onDelete }: TodoItemProps) => {
   if (isEditing) {
     return (
       <div className="todo-item editing">
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-        />
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-        />
+        <div className="edit-form">
+          <label className="edit-label">Title</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter todo title"
+            autoFocus
+          />
+          <label className="edit-label">Description</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter description (optional)"
+          />
+        </div>
         <div className="todo-actions">
-          <button onClick={handleUpdate} className="btn-save">
-            Save
-          </button>
           <button onClick={() => setIsEditing(false)} className="btn-cancel">
             Cancel
+          </button>
+          <button onClick={handleUpdate} className="btn-save">
+            Save Changes
           </button>
         </div>
       </div>

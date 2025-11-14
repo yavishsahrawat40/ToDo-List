@@ -4,7 +4,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate, Link } from 'react-router-dom';
 import { authApi } from '../api/authApi';
 import { useAuthStore } from '../store/authStore';
-import { signupSchema, SignupInput } from '../schemas/authSchemas';
+import { signupSchema } from '../schemas/authSchemas';
+import type { SignupInput } from '../schemas/authSchemas';
 
 export const Signup = () => {
   const navigate = useNavigate();

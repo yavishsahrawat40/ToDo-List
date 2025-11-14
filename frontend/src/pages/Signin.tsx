@@ -4,7 +4,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate, Link } from 'react-router-dom';
 import { authApi } from '../api/authApi';
 import { useAuthStore } from '../store/authStore';
-import { signinSchema, SigninInput } from '../schemas/authSchemas';
+import { signinSchema } from '../schemas/authSchemas';
+import type { SigninInput } from '../schemas/authSchemas';
 
 export const Signin = () => {
   const navigate = useNavigate();
@@ -55,9 +56,6 @@ export const Signin = () => {
           </button>
         </form>
 
-        <p className="auth-link">
-          <Link to="/forgot-password">Forgot Password?</Link>
-        </p>
         <p className="auth-link">
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>

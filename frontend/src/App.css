@@ -193,7 +193,19 @@ button:disabled {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .todo-item:hover {
@@ -211,11 +223,50 @@ button:disabled {
 
 .todo-item.editing {
   flex-direction: column;
+  background: #f8f9fa;
+  border-color: #667eea;
 }
 
 .todo-item.editing input,
 .todo-item.editing textarea {
-  margin-bottom: 10px;
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.3s;
+  margin-bottom: 12px;
+}
+
+.todo-item.editing input:focus,
+.todo-item.editing textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.todo-item.editing textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.todo-item.editing .todo-actions {
+  margin-top: 10px;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.edit-form {
+  width: 100%;
+}
+
+.edit-label {
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 .todo-content {
@@ -225,10 +276,16 @@ button:disabled {
 }
 
 .todo-checkbox {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   cursor: pointer;
   margin-top: 5px;
+  accent-color: #667eea;
+  transition: transform 0.2s;
+}
+
+.todo-checkbox:hover {
+  transform: scale(1.1);
 }
 
 .todo-text {
@@ -261,16 +318,34 @@ button:disabled {
   background: #3498db;
 }
 
+.btn-edit:hover:not(:disabled) {
+  background: #2980b9;
+}
+
 .btn-delete {
   background: #e74c3c;
 }
 
+.btn-delete:hover:not(:disabled) {
+  background: #c0392b;
+}
+
 .btn-save {
   background: #2ecc71;
+  min-width: 80px;
+}
+
+.btn-save:hover:not(:disabled) {
+  background: #27ae60;
 }
 
 .btn-cancel {
   background: #95a5a6;
+  min-width: 80px;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background: #7f8c8d;
 }
 
 @media (max-width: 600px) {

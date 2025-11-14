@@ -7,8 +7,6 @@ A full-stack Todo List application built with React (TypeScript) and Node.js (Ty
 ### User Management
 - User Signup with validation
 - User Sign-in with JWT authentication
-- Forgot Password functionality
-- Reset Password with email token
 
 ### Todo Management
 - Create new todos with title and description
@@ -36,7 +34,6 @@ A full-stack Todo List application built with React (TypeScript) and Node.js (Ty
 - MongoDB with Mongoose ODM
 - JWT for authentication
 - Bcrypt for password hashing
-- Nodemailer for email functionality
 - Error logging to MongoDB
 
 ## Project Structure
@@ -86,9 +83,7 @@ todo-list/
     │   ├── pages/
     │   │   ├── Home.tsx
     │   │   ├── Signup.tsx
-    │   │   ├── Signin.tsx
-    │   │   ├── ForgotPassword.tsx
-    │   │   └── ResetPassword.tsx
+    │   │   └── Signin.tsx
     │   ├── schemas/
     │   │   ├── authSchemas.ts
     │   │   └── todoSchemas.ts
@@ -108,7 +103,6 @@ todo-list/
 ### Prerequisites
 - Node.js (v16 or higher)
 - MongoDB Atlas account
-- Gmail account for email functionality (optional)
 
 ### Backend Setup
 
@@ -133,11 +127,6 @@ PORT=5000
 MONGODB_URI=your_mongodb_atlas_connection_string
 JWT_SECRET=your_secure_random_string
 JWT_EXPIRE=7d
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_gmail_app_password
-FRONTEND_URL=http://localhost:5173
 ```
 
 5. Start the development server:
@@ -184,23 +173,11 @@ The frontend will run on http://localhost:5173
 4. Copy the connection string and replace `<password>` with your database user password
 5. Paste the connection string in your backend `.env` file as `MONGODB_URI`
 
-## Email Configuration (Optional)
-
-For password reset functionality:
-
-1. Enable 2-factor authentication on your Gmail account
-2. Generate an App Password: https://myaccount.google.com/apppasswords
-3. Use this app password in your `.env` file as `EMAIL_PASS`
-
-Note: If you skip email configuration, the forgot password feature will not work, but all other features will function normally.
-
 ## API Endpoints
 
 ### Authentication
 - POST `/api/auth/signup` - Register a new user
 - POST `/api/auth/signin` - Login user
-- POST `/api/auth/forgot-password` - Request password reset
-- PUT `/api/auth/reset-password/:token` - Reset password with token
 
 ### Todos (Protected Routes)
 - GET `/api/todos` - Get all todos for logged-in user
@@ -235,13 +212,12 @@ All backend errors are caught and logged to a separate MongoDB collection (`erro
 
 ## Assumptions
 
-1. Users must verify their email is valid when signing up (no email verification flow implemented)
-2. Password reset emails are sent but require proper email configuration
-3. Todos are private to each user and cannot be shared
-4. The application uses localStorage for token persistence
-5. No pagination is implemented for todos (suitable for personal use)
-6. The UI is responsive and works on mobile devices
-7. All dates are stored in UTC and displayed in user's local timezone
+1. Users must provide valid credentials when signing up (no email verification flow implemented)
+2. Todos are private to each user and cannot be shared
+3. The application uses localStorage for token persistence
+4. No pagination is implemented for todos (suitable for personal use)
+5. The UI is responsive and works on mobile devices
+6. All dates are stored in UTC and displayed in user's local timezone
 
 ## Development Notes
 

@@ -3,8 +3,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Home } from './pages/Home';
 import { Signup } from './pages/Signup';
 import { Signin } from './pages/Signin';
-import { ForgotPassword } from './pages/ForgotPassword';
-import { ResetPassword } from './pages/ResetPassword';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import './App.css';
 
@@ -32,8 +30,6 @@ function App() {
           />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
