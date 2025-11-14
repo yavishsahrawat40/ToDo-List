@@ -7,14 +7,27 @@ A full-stack Todo List application built with React (TypeScript) and Node.js (Ty
 ### User Management
 - User Signup with validation
 - User Sign-in with JWT authentication
+- Forgot Password functionality
+- Reset Password with email token
 
 ### Todo Management
-- Create new todos with title and description
-- View all todos in a clean interface
-- Update todo details (title, description)
+- Create new todos with title, description, and deadline
+- View all todos in a clean, modern interface
+- Update todo details (title, description, deadline)
 - Mark todos as completed or not completed
 - Delete todos
+- Deadline tracking with visual indicators
+- Automatic separation of overdue tasks
 - Real-time updates with React Query
+
+### UI Features
+- Modern gradient design with glass morphism effects
+- Smooth animations and transitions
+- Current date display
+- Active and Overdue task sections
+- Deadline badges with color coding
+- Responsive design for all devices
+- Loading states and error handling
 
 ## Technology Stack
 
@@ -34,6 +47,7 @@ A full-stack Todo List application built with React (TypeScript) and Node.js (Ty
 - MongoDB with Mongoose ODM
 - JWT for authentication
 - Bcrypt for password hashing
+- Nodemailer for email functionality
 - Error logging to MongoDB
 
 ## Project Structure
@@ -83,7 +97,9 @@ todo-list/
     │   ├── pages/
     │   │   ├── Home.tsx
     │   │   ├── Signup.tsx
-    │   │   └── Signin.tsx
+    │   │   ├── Signin.tsx
+    │   │   ├── ForgotPassword.tsx
+    │   │   └── ResetPassword.tsx
     │   ├── schemas/
     │   │   ├── authSchemas.ts
     │   │   └── todoSchemas.ts
@@ -103,6 +119,7 @@ todo-list/
 ### Prerequisites
 - Node.js (v16 or higher)
 - MongoDB Atlas account
+- Gmail account for email functionality (optional for password reset)
 
 ### Backend Setup
 
@@ -127,7 +144,14 @@ PORT=5000
 MONGODB_URI=your_mongodb_atlas_connection_string
 JWT_SECRET=your_secure_random_string
 JWT_EXPIRE=7d
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_gmail_app_password
+FRONTEND_URL=http://localhost:5173
 ```
+
+Note: Email configuration is optional. If not configured, password reset will show an error message but all other features will work.
 
 5. Start the development server:
 ```bash
@@ -173,16 +197,28 @@ The frontend will run on http://localhost:5173
 4. Copy the connection string and replace `<password>` with your database user password
 5. Paste the connection string in your backend `.env` file as `MONGODB_URI`
 
+## Email Configuration (Optional)
+
+For password reset functionality:
+
+1. Enable 2-factor authentication on your Gmail account
+2. Generate an App Password: https://myaccount.google.com/apppasswords
+3. Use this app password in your `.env` file as `EMAIL_PASS`
+
+Note: If you skip email configuration, the forgot password feature will show an error message, but all other features will function normally.
+
 ## API Endpoints
 
 ### Authentication
 - POST `/api/auth/signup` - Register a new user
 - POST `/api/auth/signin` - Login user
+- POST `/api/auth/forgot-password` - Request password reset
+- PUT `/api/auth/reset-password/:token` - Reset password with token
 
 ### Todos (Protected Routes)
 - GET `/api/todos` - Get all todos for logged-in user
-- POST `/api/todos` - Create a new todo
-- PUT `/api/todos/:id` - Update a todo
+- POST `/api/todos` - Create a new todo (with optional deadline)
+- PUT `/api/todos/:id` - Update a todo (title, description, completed, deadline)
 - DELETE `/api/todos/:id` - Delete a todo
 
 ## Key Features Implementation
@@ -213,11 +249,15 @@ All backend errors are caught and logged to a separate MongoDB collection (`erro
 ## Assumptions
 
 1. Users must provide valid credentials when signing up (no email verification flow implemented)
-2. Todos are private to each user and cannot be shared
-3. The application uses localStorage for token persistence
-4. No pagination is implemented for todos (suitable for personal use)
-5. The UI is responsive and works on mobile devices
-6. All dates are stored in UTC and displayed in user's local timezone
+2. Password reset emails are sent but require proper email configuration
+3. Todos are private to each user and cannot be shared
+4. The application uses localStorage for token persistence
+5. No pagination is implemented for todos (suitable for personal use)
+6. The UI is responsive and works on mobile devices
+7. All dates are stored in UTC and displayed in user's local timezone
+8. Deadlines are optional for todos
+9. Overdue todos are automatically separated into a different section
+10. Completed todos are not marked as overdue even if past deadline
 
 ## Development Notes
 
@@ -250,11 +290,13 @@ The built files will be in the `dist` directory and can be served with any stati
 
 The demo video shows:
 1. User signup and signin
-2. Creating new todos
-3. Updating todo details
+2. Creating new todos with deadlines
+3. Updating todo details (title, description, deadline)
 4. Marking todos as completed
-5. Deleting todos
-6. User logout
+5. Viewing active and overdue task sections
+6. Deleting todos
+7. User logout
+8. Password reset flow (if email is configured)
 
 ## License
 
