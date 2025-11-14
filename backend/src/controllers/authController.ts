@@ -85,19 +85,29 @@ export const forgotPassword = async (req: Request, res: Response): Promise<void>
     const message = `You are receiving this email because you requested a password reset. Please visit: ${resetUrl}`;
 
     try {
+      // Check if email is configured
+      if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+        throw new Error('Email service not configured');
+      }
+
       await sendEmail({
         email: user.email,
         subject: 'Password Reset Request',
         message,
       });
 
-      res.status(200).json({ success: true, message: 'Email sent' });
+      res.status(200).json({ success: true, message: 'Email sent successfully' });
     } catch (error) {
       user.resetPasswordToken = undefined;
       user.resetPasswordExpire = undefined;
       await user.save();
       await logError('Email Send Error', error as Error, req.path, req.method);
-      res.status(500).json({ success: false, message: 'Email could not be sent' });
+      
+      const errorMessage = (error as Error).message.includes('not configured')
+        ? 'Email service is not configured. Please contact the administrator.'
+        : 'Failed to send email. Please try again later.';
+      
+      res.status(500).json({ success: false, message: errorMessage });
     }
   } catch (error) {
     await logError('Forgot Password Error', error as Error, req.path, req.method);

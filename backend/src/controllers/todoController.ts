@@ -5,12 +5,13 @@ import { logError } from '../utils/logger';
 
 export const createTodo = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const { title, description } = req.body;
+    const { title, description, deadline } = req.body;
 
     const todo = await Todo.create({
       userId: req.user!.id,
       title,
       description,
+      deadline: deadline ? new Date(deadline) : undefined,
     });
 
     res.status(201).json({ success: true, data: todo });
@@ -33,7 +34,7 @@ export const getTodos = async (req: AuthRequest, res: Response): Promise<void> =
 export const updateTodo = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const { title, description, completed } = req.body;
+    const { title, description, completed, deadline } = req.body;
 
     const todo = await Todo.findOne({ _id: id, userId: req.user!.id });
 
@@ -45,6 +46,7 @@ export const updateTodo = async (req: AuthRequest, res: Response): Promise<void>
     if (title !== undefined) todo.title = title;
     if (description !== undefined) todo.description = description;
     if (completed !== undefined) todo.completed = completed;
+    if (deadline !== undefined) todo.deadline = deadline ? new Date(deadline) : undefined;
 
     await todo.save();
 

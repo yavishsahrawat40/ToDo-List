@@ -25,9 +25,15 @@ export const TodoForm = ({ onSubmit, isLoading }: TodoFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="todo-form">
-      <div className="form-group">
-        <input type="text" placeholder="Todo title" {...register('title')} />
-        {errors.title && <span className="error">{errors.title.message}</span>}
+      <div className="form-row">
+        <div className="form-group flex-2">
+          <input type="text" placeholder="Todo title" {...register('title')} />
+          {errors.title && <span className="error">{errors.title.message}</span>}
+        </div>
+
+        <div className="form-group flex-1">
+          <input type="date" {...register('deadline')} />
+        </div>
       </div>
 
       <div className="form-group">

@@ -8,7 +8,24 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .auth-container {
@@ -17,21 +34,43 @@ body {
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .auth-card {
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 45px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .auth-card h1 {
   margin-bottom: 10px;
-  color: #333;
+  color: #2d3748;
   text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .auth-card p {
@@ -54,17 +93,27 @@ body {
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 12px;
-  border: 2px solid #e1e8ed;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.3s;
+  padding: 14px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+  border-color: #cbd5e0;
+  background: white;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
   border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
 }
 
 .form-group textarea {
@@ -81,19 +130,38 @@ body {
 
 button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+button:hover::before {
+  left: 100%;
 }
 
 button:hover:not(:disabled) {
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
 button:disabled {
@@ -118,25 +186,70 @@ button:disabled {
 }
 
 .home-container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .header {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 25px 30px;
+  border-radius: 20px;
   margin-bottom: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeInDown 0.6s ease;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.current-date {
+  color: #718096;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .header h1 {
-  color: #333;
-  font-size: 28px;
+  color: #2d3748;
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header h1::before {
+  content: '✓';
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 36px;
 }
 
 .user-info {
@@ -146,21 +259,43 @@ button:disabled {
 }
 
 .user-info span {
-  color: #666;
-  font-weight: 500;
+  color: #4a5568;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
 }
 
 .btn-logout {
   width: auto;
-  padding: 8px 20px;
-  background: #e74c3c;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-logout:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
 }
 
 .content {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 35px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .todo-form {
@@ -175,9 +310,20 @@ button:disabled {
 
 .no-todos {
   text-align: center;
-  color: #999;
-  padding: 40px;
+  color: #a0aec0;
+  padding: 60px 40px;
   font-size: 18px;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border-radius: 12px;
+  border: 2px dashed #cbd5e0;
+}
+
+.no-todos::before {
+  content: '📝';
+  display: block;
+  font-size: 48px;
+  margin-bottom: 15px;
+  opacity: 0.5;
 }
 
 .todos-list {
@@ -188,13 +334,14 @@ button:disabled {
 
 .todo-item {
   padding: 20px;
-  border: 2px solid #e1e8ed;
-  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   transition: all 0.3s ease;
   animation: slideIn 0.3s ease;
+  background: linear-gradient(to right, #ffffff, #f8fafc);
 }
 
 @keyframes slideIn {
@@ -210,7 +357,8 @@ button:disabled {
 
 .todo-item:hover {
   border-color: #667eea;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
 }
 
 .todo-item.completed {
@@ -223,8 +371,9 @@ button:disabled {
 
 .todo-item.editing {
   flex-direction: column;
-  background: #f8f9fa;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e8eaf6 100%);
   border-color: #667eea;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
 }
 
 .todo-item.editing input,
@@ -315,37 +464,118 @@ button:disabled {
 }
 
 .btn-edit {
-  background: #3498db;
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
 
 .btn-edit:hover:not(:disabled) {
-  background: #2980b9;
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
 }
 
 .btn-delete {
-  background: #e74c3c;
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
 }
 
 .btn-delete:hover:not(:disabled) {
-  background: #c0392b;
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
 }
 
 .btn-save {
-  background: #2ecc71;
-  min-width: 80px;
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  min-width: 100px;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
 }
 
 .btn-save:hover:not(:disabled) {
-  background: #27ae60;
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
 }
 
 .btn-cancel {
-  background: #95a5a6;
-  min-width: 80px;
+  background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+  min-width: 100px;
+  box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
 }
 
 .btn-cancel:hover:not(:disabled) {
-  background: #7f8c8d;
+  box-shadow: 0 6px 20px rgba(149, 165, 166, 0.4);
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.todos-section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.overdue-title {
+  color: #e74c3c;
+  border-bottom-color: #e74c3c;
+}
+
+.past-section {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 2px dashed #cbd5e0;
+}
+
+.todo-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.deadline-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  color: #2e7d32;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid #a5d6a7;
+}
+
+.deadline-badge.overdue {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  color: #c62828;
+  border-color: #ef9a9a;
+}
+
+.todo-item.overdue {
+  border-color: #ffcdd2;
+  background: linear-gradient(to right, #fff5f5, #ffe8e8);
+}
+
+.todo-item.overdue:hover {
+  border-color: #e74c3c;
+  box-shadow: 0 8px 25px rgba(231, 76, 60, 0.15);
 }
 
 @media (max-width: 600px) {
@@ -353,6 +583,15 @@ button:disabled {
     flex-direction: column;
     gap: 15px;
     text-align: center;
+  }
+
+  .header-left {
+    align-items: center;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
   }
 
   .todo-item {
@@ -366,5 +605,10 @@ button:disabled {
 
   .todo-actions button {
     flex: 1;
+  }
+
+  .todo-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

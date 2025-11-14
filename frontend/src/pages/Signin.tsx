@@ -57,6 +57,9 @@ export const Signin = () => {
         </form>
 
         <p className="auth-link">
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </p>
+        <p className="auth-link">
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>
       </div>

@@ -24,10 +24,34 @@ export const Home = () => {
     updateTodo({ id, data });
   };
 
+  const getCurrentDate = () => {
+    const date = new Date();
+    return date.toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+  };
+
+  const isPastTodo = (todo: Todo) => {
+    if (!todo.deadline) return false;
+    const deadline = new Date(todo.deadline);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return deadline < today && !todo.completed;
+  };
+
+  const activeTodos = todos.filter(todo => !isPastTodo(todo));
+  const pastTodos = todos.filter(todo => isPastTodo(todo));
+
   return (
     <div className="home-container">
       <header className="header">
-        <h1>My Todo List</h1>
+        <div className="header-left">
+          <h1>My Todo List</h1>
+          <p className="current-date">{getCurrentDate()}</p>
+        </div>
         <div className="user-info">
           <span>Welcome, {user?.name}!</span>
           <button onClick={handleLogout} className="btn-logout">
@@ -45,16 +69,39 @@ export const Home = () => {
           ) : todos.length === 0 ? (
             <p className="no-todos">No todos yet. Create your first one!</p>
           ) : (
-            <div className="todos-list">
-              {todos.map((todo) => (
-                <TodoItem
-                  key={todo._id}
-                  todo={todo}
-                  onUpdate={handleUpdateTodo}
-                  onDelete={deleteTodo}
-                />
-              ))}
-            </div>
+            <>
+              {activeTodos.length > 0 && (
+                <div className="todos-section">
+                  <h2 className="section-title">Active Tasks</h2>
+                  <div className="todos-list">
+                    {activeTodos.map((todo) => (
+                      <TodoItem
+                        key={todo._id}
+                        todo={todo}
+                        onUpdate={handleUpdateTodo}
+                        onDelete={deleteTodo}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {pastTodos.length > 0 && (
+                <div className="todos-section past-section">
+                  <h2 className="section-title overdue-title">⚠️ Overdue Tasks</h2>
+                  <div className="todos-list">
+                    {pastTodos.map((todo) => (
+                      <TodoItem
+                        key={todo._id}
+                        todo={todo}
+                        onUpdate={handleUpdateTodo}
+                        onDelete={deleteTodo}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

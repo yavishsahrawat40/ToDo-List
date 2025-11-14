@@ -5,6 +5,7 @@ export interface ITodoDocument extends Document {
   title: string;
   description?: string;
   completed: boolean;
+  deadline?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,6 +29,9 @@ const todoSchema = new Schema<ITodoDocument>(
     completed: {
       type: Boolean,
       default: false,
+    },
+    deadline: {
+      type: Date,
     },
   },
   {
